@@ -8,3 +8,74 @@ output: html_document
 # Plots with ggplot2
 
 We are going to make plots in R and it's going to be amazing.
+
+library(tidyverse)
+library(readxl)
+library(here)
+
+ca_np <- read_csv(here("data", "ca_np.csv"))
+ci_np <- read_excel(here("data", "ci_np.xlsx"))
+
+gg_base <- ggplot(data = ci_np, aes(x = year, y = visitors))
+
+gg_base +
+  geom_point()
+
+gg_base +
+  geom_col()
+
+gg_base +  
+  geom_area()
+
+# Intro to customizing ggplot graphs
+
+### Building on our first line graph, let’s update the line color to “purple” and make the line type “dashed”:
+
+gg_base +
+  geom_line(
+    color = "purple",
+    linetype = "dashed"
+  )
+
+Now let’s update the point, style and size of points on our previous scatterplot graph using color =, size =, and pch = (see ?pch for the different point styles, which can be further customized).
+
+gg_base + 
+  geom_point(color = "purple",
+             pch = 11,
+             size = 4,
+             alpha = 0.5)
+
+
+## Mapping variables onto aesthetics
+
+In the examples above, we have customized aesthetics based on constants that we input as arguments (e.g., the color / style / size isn’t changing based on a variable characteristic or value). Sometimes, however, we do want the aesthetics of a graph to depend on a variable. To do that, we’ll map variables onto graph aesthetics, meaning we’ll change how an element on the graph looks based on a variable characteristic (usually, character or value).
+
+In short, if updating aesthetics based on a variable, make sure to put that argument inside of aes().
+
+Example: Create a ggplot scatterplot graph where the size and color of the points change based on the number of visitors.
+
+gg_base + 
+  geom_point(
+    aes(size = visitors,
+        color = visitors),
+    alpha = 0.5
+  )
+  
+Example: the fill color (argument: fill =) changes based on the number of visitors.
+
+gg_base + 
+  geom_col(aes(fill = visitors))
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
