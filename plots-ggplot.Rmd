@@ -66,6 +66,86 @@ Example: the fill color (argument: fill =) changes based on the number of visito
 gg_base + 
   geom_col(aes(fill = visitors))
   
+#ggplot2 complete themes
+
+While every element of a ggplot graph is manually customizable, there are also built-in themes (theme_*()) that you can add to your ggplot code to make some major headway before making smaller tweaks manually.
+
+Here are a few to try today (but also notice all the options that appear as we start typing theme_ into our ggplot graph code!):
+
+theme_light()
+theme_minimal()
+theme_bw()
+
+gg_base +
+  geom_point(
+    aes(size = visitors,
+        color = visitors),
+    alpha = 0.5
+  ) +
+  theme_light()
+
+# Updating axis labels and titles
+
+Use labs() to update axis labels, and add a title and/or subtitle to your ggplot graph.
+
+gg_base +
+  geom_line(linetype = "dotted") +
+  theme_bw() +
+  labs(
+    x = "Year",
+    y = "Annual park visitors",
+    title = "Channel Islands NP Visitation",
+    subtitle = "(1963 - 2016)"
+  )
+
+Note: If you want to update the formatting of axis values (for example, to convert to comma format instead of scientific format above), you can use the scales package options (see more from the R Cookbook).
+
+# Correlation coefficient
+cor(ci_np$year, ci_np$visitors)
+
+# These two commands will have the same outcome:
+fit <- lm(visitors ~ year, data=ci_np)  # Using the columns x and y from the data frame
+fit <- lm(ci_np$visitors ~ ci_np$year)     # Using the vectors ci_np$visitorsx and ci_np$year
+
+# Get more detailed information:
+summary(fit)
+
+
+## Combining compatible geoms
+
+As long as the geoms are compatible, we can layer them on top of one another to further customize a graph.
+
+For example, adding points to a line graph:
+
+gg_base +
+  geom_line(color = "purple") +
+  geom_point(color = "green",
+             aes(size = year),
+             alpha = 0.5)
+
+#Multi-series ggplot graphs
+
+In the examples above, we only had a single series - visitation at Channel Islands National Park. Often we’ll want to visualize multiple series. For example, from the ca_np object we have stored, we might want to plot visitation for all California National Parks.
+
+To do that, we need to add an aesthetic that lets ggplot know how things are going to be grouped. A demonstration of why that’s important - what happens if we don’t let ggplot know how to group things?
+
+ggplot(data = ca_np, aes(x = year, y = visitors)) +
+  geom_line()
+
+Well that’s definitely a mess, and it’s because ggplot has no idea that these should be different series based on the different parks that appear in the ‘park_name’ column.
+
+We can make sure R does know by adding an explicit grouping argument (group =), or by updating an aesthetic based on park_name:
+
+ggplot(data = ca_np, aes(x = year, y = visitors, group = park_name)) +
+  geom_line(aes(color = park_name))
+
+Let’s store that topmost line so that we can use it more quickly later on in the lesson:
+
+gg_np <- ggplot(data = ca_np, aes(x = year, y = visitors, group = park_name))
+
+
+
+
 
 
 
