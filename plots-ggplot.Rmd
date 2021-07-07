@@ -143,12 +143,24 @@ Let’s store that topmost line so that we can use it more quickly later on in t
 
 gg_np <- ggplot(data = ca_np, aes(x = year, y = visitors, group = park_name))
 
+# Faceting ggplot graphs
+
+When we facet graphs, we split them up into multiple plotting panels, where each panel contains a subset of the data.
+
+gg_np +
+  geom_line(show.legend = FALSE) +
+  theme_light() + 
+  labs(x = "year", y = "annual visitors") +
+  facet_wrap(~ park_name)
 
 
+# Exporting a ggplot graph with ggsave()
 
+If we want our graph to appear in a knitted html, then we don’t need to do anything else. But often we’ll need a saved image file, of specific size and resolution, to share or for publication.
 
+So to export the faceted graph above at 180 dpi, width a width of 8" and a height of 7", we can use:
 
-
+ggsave(here("figures", "np_graph.jpg"), dpi = 180, width = 8, height = 7)
 
 
 

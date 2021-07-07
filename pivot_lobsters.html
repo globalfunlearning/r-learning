@@ -189,6 +189,23 @@ pre code {
 <div id="summarise-regrouping-output-by-site-override-with-.groups-argument" class="section level2">
 <h2><code>summarise()</code> regrouping output by ‘site’ (override with <code>.groups</code> argument)</h2>
 </div>
+<div id="a-ggplot-option" class="section level2">
+<h2>a ggplot option:</h2>
+<p>ggplot(data = siteyear_summary, aes(x = year, y = median_size_mm, color = site)) + geom_line()</p>
+<p>ggsave(here(“figures”, “lobsters-line.png”))</p>
+</div>
+<div id="another-option" class="section level2">
+<h2>another option:</h2>
+<p>ggplot(siteyear_summary, aes(x = year, y = median_size_mm)) + geom_col() + facet_wrap(~site)</p>
+<p>ggsave(here(“figures”, “lobsters-col.png”))</p>
+<p>lobsters %&gt;% count(site, year)</p>
+</div>
+<div id="learn-more-about-this-later" class="section level2">
+<h2>Learn more about this later:</h2>
+<p>There are 2893 total lobsters included in this summary.</p>
+<p>lobsters_detailed &lt;- lobsters %&gt;% mutate(size_m = size_mm / 1000, millenia = 2000, observer = “Allison Horst”)</p>
+<p>lobsters_detailed %&gt;% select(date, site, size_m)</p>
+</div>
 </div>
 
 

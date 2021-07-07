@@ -65,6 +65,8 @@ siteyear_summary %>%
 There are `r nrow(lobsters)` total lobsters included in this report.
 
 
+
+
 siteyear_summary <- lobsters %>%
   group_by(site, year) %>%
   summarize(count_by_siteyear =  n(), 
@@ -73,4 +75,33 @@ siteyear_summary <- lobsters %>%
             median_size_mm = median(size_mm, na.rm = TRUE))
 
 ## `summarise()` regrouping output by 'site' (override with `.groups` argument)
+
+## a ggplot option:
+ggplot(data = siteyear_summary, aes(x = year, y = median_size_mm, color = site)) +
+  geom_line()
+  
+  
+ggsave(here("figures", "lobsters-line.png"))
+
+## another option:
+ggplot(siteyear_summary, aes(x = year, y = median_size_mm)) +
+  geom_col() +
+  facet_wrap(~site)  
+
+ggsave(here("figures", "lobsters-col.png"))  
+  
+lobsters %>%
+  count(site, year)  
+
+## Learn more about this later:
+There are `r count(lobsters)` total lobsters included in this summary.
+
+
+lobsters_detailed <- lobsters %>%
+  mutate(size_m = size_mm / 1000, 
+         millenia = 2000,
+         observer = "Allison Horst")
+
+lobsters_detailed %>%
+  select(date, site, size_m)
 
