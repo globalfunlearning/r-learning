@@ -1,0 +1,20 @@
+---
+title: "my_tidying"
+author: "Henrik Gustafsson"
+date: "7/14/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# Attach packages
+library(tidyverse)
+library(janitor)
+library(here)
+library(readxl)
+
+```
+
+
+

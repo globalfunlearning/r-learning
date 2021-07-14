@@ -105,3 +105,8 @@ lobsters_detailed <- lobsters %>%
 lobsters_detailed %>%
   select(date, site, size_m)
 
+
+
+
+
+
